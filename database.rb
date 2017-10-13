@@ -1,3 +1,5 @@
+require 'json'
+
 class Database
   USERS = {
     1 => { name: 'Dave', band: 'radiohead' },
@@ -16,5 +18,10 @@ class Database
   
   def self.concerts
     CONCERTS
+  end
+
+  def self.add_show(data)
+      id = CONCERTS.size + 1
+      CONCERTS[id] = data
   end
 end

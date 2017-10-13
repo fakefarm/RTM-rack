@@ -3,7 +3,7 @@
 A Rack application is a Ruby object (not a class) that responds to `call`. It takes exactly one argument, the environment and returns an Array of exactly three values: The **status**, the **headers**, and the **body**.
 
 ## The Spec
-[SPEC](http://www.rubydoc.info/github/rack/rack/file/SPEC) provides important specifics and should be reviewed by you, if you're actually still reading this :-)
+[SPEC](http://www.rubydoc.info/github/rack/rack/file/SPEC) provides important specifics and should be reviewed by you, if you're actually still reading this :smile:
 
 ### The Environment
 The environment must be an instance of Hash that includes CGI-like headers. The application is free to modify the environment. The environment is required to include these variables (adopted from PEP333), except when they'd be empty, but see below.
@@ -57,3 +57,23 @@ an object responding to #call that must be called at least once before using rac
 
 #### rack.hijack_io
 if rack.hijack? is true, and rack.hijack has received #call, this will contain an object resembling an IO. See hijacking.
+
+## Managing Requests
+
+dealing directly with `env` is a bit tedious. `Rack::Request` is a helper wrapper that can be used instead whose only
+
+```
+request = Rack::Request.new(env)
+request.path_info
+request.request_method
+request.body
+request.env   #=> { full env hash }
+```
+
+### Example POST request
+
+Use curl to POST a new concert
+
+```
+curl -X POST http://localhost:9292/concerts --data '{ "user_id": 1, "location": "Missoula, MT", "show": "Pearl Jam", "date": "2020-10-03" }'
+```
