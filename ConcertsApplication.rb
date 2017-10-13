@@ -1,4 +1,5 @@
 require 'json'
+
 class ConcertsApplication
   def call(env)
     request = Rack::Request.new(env)

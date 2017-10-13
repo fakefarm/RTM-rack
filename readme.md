@@ -60,7 +60,7 @@ if rack.hijack? is true, and rack.hijack has received #call, this will contain a
 
 ## Managing Requests
 
-dealing directly with `env` is a bit tedious. `Rack::Request` is a helper wrapper that can be used instead whose only
+dealing directly with `env` is a bit tedious. `Rack::Request` is a helper class that can be used instead whose only
 
 ```
 request = Rack::Request.new(env)
@@ -77,3 +77,23 @@ Use curl to POST a new concert
 ```
 curl -X POST http://localhost:9292/concerts --data '{ "user_id": 1, "location": "Missoula, MT", "show": "Pearl Jam", "date": "2020-10-03" }'
 ```
+
+## Managing Responses
+
+Rack::Response is the other helper class to manage responses rather than dealing directly with `env`. The response can be passed around and modified until needed to be sent back with `finish`
+
+```
+response = Rack:Response.new
+
+response.status
+response.headers
+response.write('<p>hi</p>') # can be called multiple times
+response.set_cookie
+response.body
+
+response.finish  # => [ required response format ]
+```
+
+### response.finish
+
+`finish` method helps provide extra required data, like `content-length`
